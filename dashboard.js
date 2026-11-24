@@ -147,6 +147,7 @@ const VIEWS = {
   'Activity': sectionView,
   'Live feed': sectionView,
   'Token lookup': document.getElementById('pageTrade'),
+  'Trade': document.getElementById('pageTrade'),
   'Narratives': sectionView,
   'Alerts': sectionView,
   'Telegram': sectionView,
@@ -515,7 +516,7 @@ function showView(viewName) {
   if (viewName === 'Watchlist') renderWatchlist();
   if (viewName === 'AI Trading') renderAiPositions();
   if (viewName === 'Launchpad') renderLaunchpad();
-  if (viewName === 'Token lookup') initTradeView();
+  if (viewName === 'Token lookup' || viewName === 'Trade') initTradeView();
   if (viewName === 'Wallets') renderWalletsView();
 }
 
@@ -725,7 +726,7 @@ let searchQuery = '';
 
 // Any "Trade" button anywhere opens the real lookup/swap view (Jupiter routed)
 function quickTrade(q) {
-  showView('Token lookup');
+  showView('Trade');
   openTradeToken(String(q || '').replace(/^\$+/, ''));
 }
 
@@ -1390,7 +1391,7 @@ async function renderPortfolio() {
     }).join('');
 
     tbody.querySelectorAll('[data-opentrade]').forEach(b => b.addEventListener('click', () => {
-      showView('Token lookup');
+      showView('Trade');
       openTradeToken(b.dataset.opentrade);
     }));
 
@@ -1795,7 +1796,7 @@ document.querySelectorAll('[data-action]').forEach(el => {
         else document.getElementById('walletList')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         break;
       case 'Trade now':
-        showView('Token lookup');
+        showView('Trade');
         openTradeToken(SOL_MINT_LIT);
         break;
       case 'Chart': {
@@ -2795,7 +2796,8 @@ if (window.location.hash) {
     'wallets': 'Wallets',
     'activity': 'Activity',
     'live-feed': 'Live feed',
-    'token-lookup': 'Token lookup',
+    'token-lookup': 'Trade',
+    'trade': 'Trade',
     'narratives': 'Narratives',
     'alerts': 'Alerts',
     'telegram': 'Telegram',
@@ -2834,6 +2836,12 @@ const tradeState = {
   wired: false, busy: false, quoteTimer: null,
   tokenBal: 0, solUsd: null
 };
+
+// Where to POST a confirmed swap so the Telegram bot's /trades history stays in
+// sync. Populated from ?bot= / ?key= when the page is opened from the bot's
+// /buy /sell button. An empty bot = standalone visit → the swap still executes
+// on-chain, it just isn't mirrored back to the bot.
+const tradeHook = { bot: '', key: '' };
 
 const TRADE_TFS = {
   '5m': { tf: 'minute', agg: 5, limit: 96 },
@@ -3338,6 +3346,20 @@ function markTpProgress(order, stage) {
   });
 }
 
+// POST a confirmed swap to the bot's /api/record-trade so the Telegram /trades
+// history matches the chain. No-op when the dashboard wasn't opened via ?bot=.
+async function recordTradeWithBot(payload) {
+  if (!tradeHook.bot) return;
+  const body = Object.assign({}, payload);
+  if (tradeHook.key) body.key = tradeHook.key;
+  const r = await fetch(tradeHook.bot + '/api/record-trade', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error('bot responded ' + r.status);
+}
+
 async function executeTrade() {
   const c = window.LanternChain;
   if (!c) { showToast('Chain module still loading — try again.'); return; }
@@ -3412,6 +3434,17 @@ async function executeTrade() {
       sig: res.signature, ts: Date.now(), explorer: res.explorer
     });
     writeTrades(trades);
+
+    // Best-effort: mirror the swap to the bot so /trades history matches chain.
+    recordTradeWithBot({
+      signature: res.signature,
+      side: tradeState.side,
+      mint: tradeState.mint,
+      sym: tradeState.sym,
+      inUi: amt.ui,
+      outUi: outUi,
+      signerAddress: (c.getState && c.getState().address) || ''
+    }).catch(e => console.warn('[record-trade]', e && e.message));
 
     showToast(`✓ ${tradeState.side === 'buy' ? 'Bought' : 'Sold'} ${fmtTok(outUi)} ${tradeState.side === 'buy' ? tradeState.sym : 'SOL'} — ${shortAddr(res.signature)}`);
     if (hint) hint.innerHTML = `<a href="${escHtml(res.explorer)}" target="_blank" rel="noopener" style="color:var(--cyan)">View tx on Solscan ↗</a>`;
@@ -3692,7 +3725,7 @@ async function loadHoldings() {
       </tr>`;
     }).join('');
     body.querySelectorAll('[data-opentrade]').forEach(b => b.addEventListener('click', () => {
-      showView('Token lookup');
+      showView('Trade');
       openTradeToken(b.dataset.opentrade);
     }));
   } catch (e) {
@@ -3892,3 +3925,60 @@ document.addEventListener('lantern:wallet', e => {
 window.LANTERN.data.prices([SOL_MINT]).then(p => {
   if (p && p[SOL_MINT]) tradeState.solUsd = p[SOL_MINT].usd;
 }).catch(() => {});
+
+/* ---------------- Telegram deep-link ----------------
+   The bot's /buy /sell buttons open the dashboard with
+   ?side=&mint=&sym=&amount=&bot=&key=&rpc=. They land on the Trade view — the
+   same view reachable from the sidebar — so the lookup, chart, safety read and
+   the Phantom + Jupiter swap all live inside the dashboard (no separate page). */
+(async function applyTradeDeepLink() {
+  const p = new URLSearchParams(location.search);
+  const mint = p.get('mint');
+  const bot = (p.get('bot') || '').replace(/\/$/, '');
+  const key = p.get('key') || '';
+  const side = (p.get('side') || '').toLowerCase();
+  const amount = p.get('amount');
+  const rpc = p.get('rpc');
+
+  if (bot) tradeHook.bot = bot;
+  if (key) tradeHook.key = key;
+
+  // Prefer the bot's Helius RPC for mainnet (better rate limits than public).
+  if (rpc) {
+    const apply = () => {
+      if (window.LanternChain && window.LanternChain.setRpc) {
+        window.LanternChain.setRpc(rpc, 'mainnet');
+        return true;
+      }
+      return false;
+    };
+    if (!apply()) {
+      const t = setInterval(() => { if (apply()) clearInterval(t); }, 250);
+      setTimeout(() => clearInterval(t), 8000);
+    }
+  }
+
+  if (!mint) return;
+  showView('Trade');
+  await openTradeToken(mint);
+  if (side === 'sell') setTradeSide('sell');
+  const v = parseTradeAmount(amount);
+  if (v > 0 && T$('tpAmount')) {
+    T$('tpAmount').value = String(v);
+    scheduleTradeQuote(true);
+  }
+})();
+
+// "0.1" / "250k" / "1m" → number. The bot passes the raw /buy /sell amount
+// text straight through (SOL for buys, token count for sells).
+function parseTradeAmount(s) {
+  const m = /^([0-9]*\.?[0-9]*)\s*([kmb])?$/i.exec(String(s == null ? '' : s).trim());
+  if (!m) return 0;
+  let v = parseFloat(m[1]);
+  if (!isFinite(v)) return 0;
+  const suf = (m[2] || '').toLowerCase();
+  if (suf === 'k') v *= 1e3;
+  else if (suf === 'm') v *= 1e6;
+  else if (suf === 'b') v *= 1e9;
+  return v;
+}
