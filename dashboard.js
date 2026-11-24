@@ -1790,7 +1790,6 @@ document.querySelectorAll('[data-action]').forEach(el => {
     if (el.tagName === 'A') e.preventDefault();
     const action = el.dataset.action;
     switch (action) {
-      case 'Create wallets': createWallets(); break;
       case 'Your wallets':
         if (!getWallets()) createWallets();
         else document.getElementById('walletList')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
