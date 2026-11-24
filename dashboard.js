@@ -634,9 +634,9 @@ async function loadOverviewCallout() {
     set('coVol', '\u2014');
     set('coBuyers', '\u2014');
     set('coLiq', '\u2014');
-    set('contractAddress', 'Set LATERN_MINT at top of dashboard.js');
+    set('contractAddress', '—');
     const sub = document.getElementById('calloutSub');
-    if (sub) sub.textContent = 'Deploy $LATERN via the Launchpad, then paste its mint address into dashboard.js';
+    if (sub) sub.textContent = 'Paste the $LATERN mint at the top of dashboard.js to load live stats.';
     // Still load the SOL chart as a visual fallback so the page doesn't look broken
     try {
       if (!marketChart.pair) marketChart.pair = await D.tokenInfo(SOL_MINT_LIT);
