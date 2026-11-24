@@ -127,6 +127,14 @@ body {
   font-weight: 700;
   color: var(--trade-text);
 }
+.trade-help {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--trade-border);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--trade-text-dim);
+}
 
 /* Buttons */
 .btn-primary, .btn-execute, .btn-ghost {
