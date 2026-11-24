@@ -295,4 +295,7 @@ body {
   .trade-main { padding: 14px 12px 60px; }
   .wallet-addr { font-size: 12px; }
   .btn-primary, .btn-ghost { font-size: 13px; padding: 10px 14px; }
+  .card { padding: 14px; }
+  .trade-help { font-size: 11px; padding-top: 12px; }
+  .btn-execute { padding: 16px; font-size: 15px; }
 }
