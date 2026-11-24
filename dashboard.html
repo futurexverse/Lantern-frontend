@@ -1,0 +1,1241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06080f">
+  <meta name="description" content="LANTERN dashboard — your command center on-chain. AI trading, auto sniping, portfolios, launches and rewards in one place.">
+  <title>Overview — LANTERN Dashboard</title>
+  <link rel="icon" href="assets/lantern-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>try{var p=new URLSearchParams(location.search).get('theme');var t=p||localStorage.getItem("lantern:theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dash-page">
+
+  <div class="dash-overlay" id="dashOverlay"></div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="dash-sidebar" id="dashSidebar">
+    <!-- Clean brand link (NO box around logo) -->
+    <a href="index.html" class="dash-brand" aria-label="LANTERN Home">
+      <img src="assets/lantern-logo.png" alt="LANTERN logo" class="brand-logo-img">
+      <span class="brand-name">LANTERN</span>
+    </a>
+
+    <div class="side-label">WORKSPACE</div>
+
+    <nav class="side-nav">
+      <a href="#overview" class="side-link active" data-nav="Overview">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        Overview
+        <span class="active-dot"></span>
+      </a>
+      <a href="#discover" class="side-link" data-nav="Discover">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        Discover
+      </a>
+      <a href="#pnl" class="side-link" data-nav="PnL & cards">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        PnL &amp; cards
+      </a>
+      <a href="#portfolio" class="side-link" data-nav="Portfolio">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3a2 2 0 0 1-2-2V2"/><path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2Z"/><path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h11.4"/></svg>
+        Portfolio
+      </a>
+      <a href="#watchlist" class="side-link" data-nav="Watchlist">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Watchlist
+      </a>
+      <a href="#ai-trading" class="side-link" data-nav="AI Trading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>
+        AI Trading
+      </a>
+      <a href="#auto-snipe" class="side-link" data-nav="Auto Snipe">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>
+        Auto Snipe
+      </a>
+
+    </nav>
+
+    <div class="side-label">LAUNCHPAD</div>
+    <nav class="side-nav">
+      <a href="#launchpad" class="side-link" data-nav="Launchpad">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+        Launchpad
+        <span class="badge-new">NEW</span>
+      </a>
+      <a href="#cabal" class="side-link" data-nav="Cabal leaderboard">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        Cabal leaderboard
+      </a>
+      <a href="#holder-rewards" class="side-link" data-nav="Holder rewards">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
+        Holder rewards
+      </a>
+      <a href="#referrals" class="side-link" data-nav="Referrals">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Referrals
+      </a>
+    </nav>
+
+    <div class="side-label">YOUR ACCOUNT</div>
+    <nav class="side-nav">
+      <a href="#wallets" class="side-link" data-nav="Wallets">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+        Wallets
+      </a>
+      <a href="#activity" class="side-link" data-nav="Activity">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Activity
+      </a>
+    </nav>
+
+    <div class="side-label">TOOLS</div>
+    <nav class="side-nav">
+      <a href="#live-feed" class="side-link" data-nav="Live feed">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/><path d="M7.76 16.24a6 6 0 0 1 0-8.49"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        Live feed
+      </a>
+      <a href="#token-lookup" class="side-link" data-nav="Token lookup">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+        Token lookup
+      </a>
+      <a href="#narratives" class="side-link" data-nav="Narratives">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        Narratives
+      </a>
+      <a href="#alerts" class="side-link" data-nav="Alerts">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Alerts
+      </a>
+      <a href="#telegram" class="side-link" data-nav="Telegram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+        Telegram
+      </a>
+      <a href="#bridge" class="side-link" data-nav="Bridge">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18"/><path d="M5 18v-4a7 7 0 0 1 14 0v4"/><path d="M12 7V4"/></svg>
+        Bridge
+      </a>
+      <a href="#ai-advanced" class="side-link" data-nav="AI Advanced">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2"/><path d="M15 2v2"/><path d="M9 20v2"/><path d="M15 20v2"/><path d="M2 9h2"/><path d="M2 15h2"/><path d="M20 9h2"/><path d="M20 15h2"/></svg>
+        AI Advanced
+      </a>
+      <a href="#strategy-lab" class="side-link" data-nav="Strategy Lab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3h15"/><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"/><path d="M6 14h12"/></svg>
+        Strategy Lab
+      </a>
+      <a href="#proposals" class="side-link" data-nav="Proposals">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg>
+        Proposals
+      </a>
+      <a href="#public-calls" class="side-link" data-nav="Public calls">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        Public calls
+      </a>
+    </nav>
+
+    <div class="side-footer">
+      <div class="user-pill" id="userPill">
+        <span class="avatar-sm" id="userAvatarSm">L</span>
+        <div class="user-info">
+          <span class="user-name" id="sideUserName">trader</span>
+          <span class="user-status">Online · SOL/RBH</span>
+        </div>
+        <button class="logout-btn" id="logoutBtn" title="Sign out / Landing">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= TOPBAR ================= -->
+  <header class="dash-topbar">
+    <button class="hamburger" id="dashHamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <span class="page-title" id="pageTitle">Overview</span>
+
+    <div class="search-box">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Search a contract or token..." autocomplete="off" spellcheck="false">
+      <kbd>/</kbd>
+    </div>
+
+    <span class="divider-v" aria-hidden="true"></span>
+
+    <button class="chip pill-chain" id="chainBtn" title="Click to cycle chain filter">
+      <i></i><span id="chainLabel">SOL + RBH</span>
+    </button>
+    <button class="chip pill-engine" id="engineBtn" title="Engine status">
+      <i></i>Engine live
+    </button>
+
+    <span class="topbar-flex"></span>
+
+    <button class="theme-btn" id="dashThemeBtn" aria-label="Toggle theme" title="Switch theme">
+      <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+
+    <div class="user-menu-wrap">
+      <button class="avatar" id="userAvatar" aria-label="User menu">L</button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="ud-head">
+          <strong id="dropdownUserName">trader</strong>
+          <span>trader@lantern.io</span>
+        </div>
+        <hr>
+        <button class="ud-item" data-action="Your wallets">My Wallets</button>
+        <button class="ud-item" data-action="Reset demo">Reset Demo Data</button>
+        <a href="index.html" class="ud-item">Back to Landing Page</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="dash-main">
+
+    <!-- ========== VIEW 1: OVERVIEW ========== -->
+    <div id="pageOverview" class="dash-view">
+
+      <!-- Token callout ($LATERN — the platform's featured token) -->
+      <section class="token-callout" id="tokenCallout">
+        <div class="callout-head">
+          <img class="callout-mascot" id="calloutMascot" src="assets/lantern-logo.png" alt="LANTERN logo">
+          <div>
+            <div class="callout-token">$LATERN</div>
+            <div class="callout-sub" id="calloutSub">Official LATERN contract · live on Solana</div>
+          </div>
+        </div>
+
+        <div class="callout-ca">
+          <span class="ca-text" id="contractAddress">Set LATERN_MINT in dashboard.js</span>
+          <button class="ca-copy" id="copyBtn" aria-label="Copy token address" title="Copy address">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat"><label>Price</label><span class="val" id="coPrice">—</span></div>
+          <div class="stat"><label>Market cap</label><span class="val" id="coMcap">—</span></div>
+          <div class="stat"><label>Vol 24h</label><span class="val" id="coVol">—</span></div>
+          <div class="stat"><label>Buyers 24h</label><span class="val" id="coBuyers">—</span></div>
+          <div class="stat"><label>Liquidity</label><span class="val" id="coLiq">—</span></div>
+        </div>
+
+        <div class="callout-actions" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+          <button class="btn-primary btn-sm" id="calloutBuyBtn" data-action="Buy LATERN">Buy $LATERN</button>
+          <button class="btn-ghost btn-sm" id="calloutTradeBtn">Open in Trade view</button>
+        </div>
+
+        <div class="chart-block" id="chartBlock">
+          <div class="chart-block-head">
+            <span class="chart-block-title">$LATERN / USD <span class="token-chain-badge">SOLANA</span></span>
+            <div class="pnl-tabs" id="candleTabs">
+              <button class="tab" data-ctf="15m">15m</button>
+              <button class="tab active" data-ctf="1H">1H</button>
+              <button class="tab" data-ctf="4H">4H</button>
+              <button class="tab" data-ctf="1D">1D</button>
+            </div>
+          </div>
+          <div id="candleChart"></div>
+        </div>
+
+        <div class="callout-actions">
+          <button class="chart-link" id="chartToggleBtn" data-action="Chart">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Chart
+          </button>
+          <button class="buy-btn" data-action="Trade now">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Trade SOL
+          </button>
+          <button class="callout-close" id="calloutClose" aria-label="Dismiss">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Greeting & Wallets -->
+      <span class="mini-eyebrow">YOUR EDGE STARTS HERE</span>
+      <section class="greet">
+        <div>
+          <h1 class="greet-title">Already ahead of the curve.</h1>
+          <p class="greet-sub">Good to see you, <strong id="userName">trader</strong>. Your market, your portfolio, your next move. All in one place.</p>
+        </div>
+        <button class="quick-btn" data-action="Your wallets">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+          Your wallets
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        </button>
+      </section>
+
+      <!-- Create Wallets Card -->
+      <section class="action-card" id="walletCard">
+        <span class="action-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" x2="12" y1="12" y2="12"/></svg>
+        </span>
+        <span class="action-text">
+          <span class="action-title">Create your trading wallets</span>
+          <span class="action-sub">One click makes your Solana and Robinhood wallets. Instant automated trading once ready.</span>
+        </span>
+        <button class="btn-mini" data-action="Create wallets">
+          Create wallets
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </section>
+      <div id="walletList"></div>
+
+      <!-- Realized PnL Panel -->
+      <section class="pnl-panel">
+        <div class="pnl-head">
+          <h3>Realized PnL</h3>
+          <div class="pnl-tabs">
+            <button class="tab" data-ptab="7D">7D</button>
+            <button class="tab" data-ptab="30D">30D</button>
+            <button class="tab active" data-ptab="ALL">ALL</button>
+          </div>
+        </div>
+        <p class="pnl-sub">Realized profit and loss from closed trading positions.</p>
+        <div id="overviewRealized"></div>
+      </section>
+
+      <!-- Meet your next big idea (Clean launch promo with ai-trading-mascot.png, ZERO glow) -->
+      <section class="launch-promo">
+        <div class="promo-content">
+          <span class="mini-eyebrow">MEET YOUR NEXT BIG IDEA</span>
+          <h2 class="promo-title">Small token.<br>Big possibilities.</h2>
+          <p class="promo-sub">Go from an idea to your own token.<br>Launch it. Grow it. Share the rewards.</p>
+          <button class="move-row" data-action="Make your first move">
+            <span>Make your first move</span>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+        <img class="launch-mascot" src="assets/mascot.png" alt="LANTERN AI trading mascot">
+      </section>
+
+      <!-- Market Table with Filters -->
+      <section class="market-card">
+        <div class="market-header">
+          <div class="market-tabs" id="marketTabs">
+            <button class="m-tab active" data-filter="all">All Tokens</button>
+            <button class="m-tab" data-filter="trending">Trending</button>
+            <button class="m-tab" data-filter="gainers">Top Gainers</button>
+            <button class="m-tab" data-filter="new">New Pairs</button>
+            <button class="m-tab" data-filter="ai">AI Tokens</button>
+          </div>
+          <div class="market-search-mini">
+            <input type="text" id="tableFilterInput" placeholder="Filter list..." autocomplete="off">
+          </div>
+        </div>
+
+        <table class="market-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Price</th>
+              <th>24h Change</th>
+              <th class="col-vol">Vol 24h</th>
+              <th class="col-liq">Liquidity</th>
+              <th class="col-action">Action</th>
+            </tr>
+          </thead>
+          <tbody id="marketBody"></tbody>
+        </table>
+
+        <div class="market-foot">
+          <span id="marketCount">Showing 8 tokens · prices from the latest engine snapshot</span>
+          <a href="#discover" class="explore" data-action="Explore the market">
+            Explore the market
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- Shortcut Cards -->
+      <div class="shortcut-grid">
+        <a href="#ai-trading" class="shortcut" data-nav="AI Trading">
+          <span class="sc-icon">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><circle cx="12" cy="12" r="3"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/></svg>
+          </span>
+          <span class="action-text">
+            <span class="action-title">Your strategy. On autopilot.</span>
+            <span class="action-sub">Set your risk budget and let the AI agent manage entries and exits.</span>
+          </span>
+          <svg class="sc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+
+        <a href="#auto-snipe" class="shortcut" data-nav="Auto Snipe">
+          <span class="sc-icon sc-violet">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>
+          </span>
+          <span class="action-text">
+            <span class="action-title">Block-0 Sniping Engine.</span>
+            <span class="action-sub">Set auto-sniping rules for liquidity deployments on Solana &amp; Robinhood.</span>
+          </span>
+          <svg class="sc-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div><!-- /pageOverview -->
+
+    <!-- ========== VIEW 2: DISCOVER ========== -->
+    <div id="pageDiscover" class="dash-view" hidden>
+      <div class="view-header">
+        <div>
+          <h2>Token Screener &amp; Discovery</h2>
+          <p class="view-sub">Real-time bonding curves, new listings, and volume surges on Solana &amp; Robinhood.</p>
+        </div>
+        <div class="filter-pills">
+          <button class="fp-btn active" data-disc="all">All</button>
+          <button class="fp-btn" data-disc="graduating">Graduating (&gt;80%)</button>
+          <button class="fp-btn" data-disc="new">Newest</button>
+          <button class="fp-btn" data-disc="ai">AI Memes</button>
+        </div>
+      </div>
+      <div class="discover-grid" id="discoverGrid"></div>
+    </div>
+
+    <!-- ========== VIEW 3: PNL & CARDS ========== -->
+    <div id="pagePnL" class="dash-view" hidden>
+      <div class="view-header">
+        <div>
+          <h2>Realized PnL &amp; Trade Cards</h2>
+          <p class="view-sub">Track closed positions, calculate ROI, and generate shareable trade cards.</p>
+        </div>
+        <button class="btn-mini" id="shareCardBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+          Export PnL Card
+        </button>
+      </div>
+
+      <div class="stats-banner">
+        <div class="sb-item"><label>Total Realized PnL</label><span class="sb-val up">+$3,420.50 (+28.4%)</span></div>
+        <div class="sb-item"><label>Win Rate</label><span class="sb-val">74.2%</span></div>
+        <div class="sb-item"><label>Best Trade</label><span class="sb-val up">+175.8% ($CALLER)</span></div>
+        <div class="sb-item"><label>Avg Hold Time</label><span class="sb-val">4.2 hours</span></div>
+      </div>
+
+      <div class="pnl-panel" style="margin-top:20px;">
+        <div class="pnl-head">
+          <h3>Cumulative Performance</h3>
+          <div class="pnl-tabs">
+            <button class="tab active" data-ptab="7D">7D</button>
+            <button class="tab" data-ptab="30D">30D</button>
+            <button class="tab" data-ptab="ALL">ALL</button>
+          </div>
+        </div>
+        <div id="fullPnlBars"></div>
+      </div>
+
+      <section class="market-card" style="margin-top:24px;">
+        <div class="market-header">
+          <span style="font-weight:700;font-size:15px;">Recent Closed Trades</span>
+        </div>
+        <table class="market-table">
+          <thead>
+            <tr><th>Token</th><th>Side</th><th>Amount</th><th>Price</th><th>Value</th><th>Tx / Time</th></tr>
+          </thead>
+          <tbody id="tradeHistoryBody"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <!-- ========== VIEW 4: PORTFOLIO ========== -->
+    <div id="pagePortfolio" class="dash-view" hidden>
+      <div class="view-header">
+        <div>
+          <h2>Wallet Portfolio</h2>
+          <p class="view-sub">Connected balance and asset distribution across chains.</p>
+        </div>
+        <button class="btn-mini" data-action="Deposit">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+          Deposit / Receive
+        </button>
+      </div>
+
+      <div class="stats-banner">
+        <div class="sb-item"><label>Total Net Worth</label><span class="sb-val" id="pfNetWorth">—</span></div>
+        <div class="sb-item"><label>24h Unrealized</label><span class="sb-val" id="pfUnrealized">—</span></div>
+        <div class="sb-item"><label>Assets held</label><span class="sb-val" id="pfAssetCount">—</span></div>
+        <div class="sb-item"><label>SOL balance</label><span class="sb-val" id="pfSolBal">—</span></div>
+      </div>
+
+      <section class="market-card" style="margin-top:24px;">
+        <div class="market-header">
+          <span style="font-weight:700;font-size:15px;">Asset Breakdown</span>
+        </div>
+        <table class="market-table">
+          <thead>
+            <tr><th>Asset</th><th>Balance</th><th>Price</th><th>Value</th><th>24h</th><th>Action</th></tr>
+          </thead>
+          <tbody id="portfolioBody"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <!-- ========== VIEW 5: WATCHLIST ========== -->
+    <div id="pageWatchlist" class="dash-view" hidden>
+      <div class="view-header">
+        <div>
+          <h2>Your Watchlist</h2>
+          <p class="view-sub">Starred tokens tracked with instant alerts and fast buy triggers.</p>
+        </div>
+      </div>
+      <section class="market-card">
+        <table class="market-table">
+          <thead>
+            <tr><th>Token</th><th>Price</th><th>24h Change</th><th class="col-vol">Vol 24h</th><th>Alerts</th><th>Action</th></tr>
+          </thead>
+          <tbody id="watchlistBody"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <!-- ========== VIEW 6: AI TRADING ========== -->
+    <div id="pageAITrading" class="dash-view" hidden>
+      <div class="coming-soon">
+        <div class="cs-icon">🤖</div>
+        <h2>AI Trading</h2>
+        <p class="cs-tag">Coming Soon</p>
+        <p class="cs-body">
+          Autonomous AI-driven trade signals and execution.
+          We're building this with real on-chain intelligence — no mockups.
+          Until it's ready, use <a href="#trade" data-nav="Trade">the Trade view</a>
+          for manual swaps, or <a href="#launchpad" data-nav="Launchpad">the Launchpad</a>
+          to deploy your own token.
+        </p>
+        <p class="cs-hint">In the meantime, join @LanternRBbot on Telegram for live alerts.</p>
+      </div>
+    </div>
+
+    <!-- ========== VIEW 7: AUTO SNIPE ========== -->
+    <div id="pageAutoSnipe" class="dash-view" hidden>
+      <div class="coming-soon">
+        <div class="cs-icon">🎯</div>
+        <h2>Auto Snipe</h2>
+        <p class="cs-tag">Coming Soon</p>
+        <p class="cs-body">
+          Block-0 sniping of new pool launches with custom trigger conditions
+          (LP burn, dev holdings, anti-MEV routing). We're building this for real —
+          no fake "saved to node engine" toasts.
+          Until it's ready, use <a href="#newpools" data-nav="Discover">the Discover view</a>
+          to see new pools and trade them manually.
+        </p>
+        <p class="cs-hint">Follow @LanternRBbot on Telegram for new-pool alerts.</p>
+      </div>
+    </div>
+
+    <!-- ========== VIEW 8: CREATE & EARN ========== -->
+    <!-- ========== VIEW 9: MEMECOIN LAUNCHPAD ========== -->
+    <div id="pageLaunchpad" class="dash-view" hidden>
+      <div class="view-header">
+        <div class="vh-with-icon">
+          <span class="vh-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          </span>
+          <div>
+            <h2>Meme Coin Launchpad</h2>
+            <p class="view-sub">Name it, set your creator fee, deploy a real SPL mint from your wallet — then buy your own token.</p>
+          </div>
+        </div>
+        <button class="btn-primary" id="createCoinBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          Create memecoin
+        </button>
+      </div>
+
+      <!-- Wallet + RPC bar -->
+      <section class="wallet-bar" id="walletBar">
+        <div class="wallet-bar-info">
+          <span class="wallet-dot" id="walletDot"></span>
+          <div class="wallet-bar-text">
+            <strong id="walletStateLabel">Wallet not connected</strong>
+            <span id="walletSubLabel">Connect Phantom or Solflare to launch a real SPL token.</span>
+          </div>
+        </div>
+        <div class="wallet-bar-actions">
+          <span class="rpc-pill" id="rpcPill" title="RPC latency"><i></i><b id="rpcMs">—</b></span>
+          <select id="lpNetSelect" class="sec-select lp-net" aria-label="Launch network">
+            <option value="devnet" selected>Devnet — free</option>
+            <option value="mainnet">Mainnet — real SOL</option>
+          </select>
+          <a href="#wallets" class="btn-ghost" data-nav="Wallets">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+            RPC
+          </a>
+          <button class="btn-primary btn-sm" id="walletActionBtn">Connect wallet</button>
+        </div>
+      </section>
+
+      <div class="stats-banner" style="margin-top:20px;">
+        <div class="sb-item"><label>Your launches</label><span class="sb-val" id="lpStatLaunches">0</span></div>
+        <div class="sb-item"><label>Supply minted</label><span class="sb-val" id="lpStatSupply">0</span></div>
+        <div class="sb-item"><label>Networks used</label><span class="sb-val" id="lpStatNets">—</span></div>
+        <div class="sb-item"><label>Launchpad</label><span class="sb-val up" id="lpStatStatus">Ready</span></div>
+      </div>
+
+      <section class="market-card" style="margin-top:24px;">
+        <div class="market-header">
+          <span style="font-weight:700;font-size:15px;">Your launched tokens</span>
+          <button class="table-trade-btn" id="createCoinBtn2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            New launch
+          </button>
+        </div>
+        <table class="market-table">
+          <thead>
+            <tr><th>Token</th><th>Mint address</th><th>Network</th><th>Supply</th><th>Status</th><th>Action</th></tr>
+          </thead>
+          <tbody id="launchListBody"></tbody>
+        </table>
+        <div class="market-foot">
+          <span id="launchCount">0 launches · confirmed mints appear here the moment they land on-chain</span>
+        </div>
+      </section>
+
+      <div class="sec-grid" style="margin-top:24px;">
+        <div class="sec-card">
+          <span class="sec-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          <h4>Create</h4>
+          <p>Name, ticker, story, logo and socials — with a live preview and traction score updating as you type.</p>
+          <div class="sec-meta"><span>STEP 01</span><span>~60 sec</span></div>
+        </div>
+        <div class="sec-card">
+          <span class="sec-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg></span>
+          <h4>Launch</h4>
+          <p>Sign twice in your wallet: create the mint, then mint the supply. Revoked authorities = fixed supply.</p>
+          <div class="sec-meta"><span>STEP 02</span><span>2 txs</span></div>
+        </div>
+        <div class="sec-card">
+          <span class="sec-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+          <h4>Trade &amp; earn</h4>
+          <p>Buy through Jupiter the second liquidity lands, and split creator fees back onto your holders.</p>
+          <div class="sec-meta"><span>STEP 03</span><span>live</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== VIEW 10: TRADE / TOKEN LOOKUP ========== -->
+    <div id="pageTrade" class="dash-view" hidden>
+      <div class="view-header">
+        <div class="vh-with-icon">
+          <span class="vh-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </span>
+          <div>
+            <h2>Trade</h2>
+            <p class="view-sub">Paste a mint address or search a ticker — real chart, on-chain safety read, live Jupiter quotes.</p>
+          </div>
+        </div>
+        <span class="chain-pill"><i></i> Solana Mainnet · Jupiter</span>
+      </div>
+
+      <!-- Lookup bar -->
+      <div class="lookup-bar">
+        <span class="lookup-ico" aria-hidden="true">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+        </span>
+        <input id="lookupInput" type="text" spellcheck="false" autocomplete="off"
+               placeholder="Paste a Solana mint address (or type a ticker, e.g. JUP, WIF, BONK)">
+        <button class="btn-primary btn-sm" id="lookupBtn">Analyze</button>
+      </div>
+      <p class="lookup-hint" id="lookupHint">New here? Pick a trending token below to open its card.</p>
+
+      <!-- Empty / trending state -->
+      <div id="tradeEmpty">
+        <div class="trend-head">
+          <span>Trending on-chain <em>via DexScreener boosts</em></span>
+          <button class="table-trade-btn" id="trendRefresh">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+            Refresh
+          </button>
+        </div>
+        <div class="trend-grid" id="trendGrid"></div>
+        <div class="sec-grid trend-sec" id="poolGridWrap">
+          <div class="sec-card"><span class="sec-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg></span><h4>Lookup</h4><p>Any mint address gets a full read: price, market cap, liquidity, holders and a rug-risk verdict.</p><div class="sec-meta"><span>LIVE</span></div></div>
+          <div class="sec-card"><span class="sec-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><h4>Swap</h4><p>Real Jupiter routing with the price impact, minimum received and slippage shown before you sign.</p><div class="sec-meta"><span>JUPITER</span></div></div>
+          <div class="sec-card"><span class="sec-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><h4>Safety</h4><p>Authorities, holder concentration, liquidity depth and flow — scored against real on-chain data.</p><div class="sec-meta"><span>ON-CHAIN</span></div></div>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div class="trade-loading" id="tradeLoading" hidden>
+        <span class="spin"></span> Reading on-chain data…
+      </div>
+
+      <!-- Token card (loaded) -->
+      <div id="tradeLoaded" hidden>
+        <div class="trade-grid">
+          <div class="trade-main">
+            <section class="market-card tk-head">
+              <div class="tk-id">
+                <div class="token-pic tk-pic" id="tkPic">?</div>
+                <div class="tk-names">
+                  <div class="tk-line1"><strong id="tkSym">—</strong><span class="token-chain-badge" id="tkDex">SOLANA</span></div>
+                  <span class="t-name" id="tkName">—</span>
+                </div>
+              </div>
+              <div class="tk-price">
+                <strong id="tkPrice">—</strong>
+                <span id="tkChange">—</span>
+              </div>
+              <div class="tk-mint">
+                <code id="tkMint">—</code>
+                <button class="table-trade-btn" id="tkCopy">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  Copy
+                </button>
+                <a class="table-trade-btn" id="tkExplorer" href="#" target="_blank" rel="noopener">Explorer ↗</a>
+              </div>
+            </section>
+
+            <div class="tk-stats" id="tkStats">
+              <div class="tks"><label>Market cap</label><span id="tksMcap">—</span></div>
+              <div class="tks"><label>Liquidity</label><span id="tksLiq">—</span></div>
+              <div class="tks"><label>24h volume</label><span id="tksVol">—</span></div>
+              <div class="tks"><label>24h txns</label><span id="tksTxns">—</span></div>
+              <div class="tks"><label>Pool age</label><span id="tksAge">—</span></div>
+              <div class="tks"><label>5m / 1h / 24h</label><span id="tksChg">—</span></div>
+            </div>
+
+            <section class="market-card">
+              <div class="market-header chart-head">
+                <span style="font-weight:700;font-size:15px;">Chart</span>
+                <div class="tf-row" id="tkTfRow">
+                  <button data-tf="5m" class="tf-btn">5m</button>
+                  <button data-tf="15m" class="tf-btn active">15m</button>
+                  <button data-tf="1h" class="tf-btn">1H</button>
+                  <button data-tf="6h" class="tf-btn">6H</button>
+                  <button data-tf="1d" class="tf-btn">1D</button>
+                </div>
+              </div>
+              <div id="tkChart" class="tk-chart"></div>
+              <div class="market-foot"><span id="tkChartFoot">Real OHLCV via GeckoTerminal</span></div>
+            </section>
+
+            <section class="market-card">
+              <div class="market-header"><span style="font-weight:700;font-size:15px;">Safety read</span><strong class="safety-score" id="safetyScore">—</strong></div>
+              <div class="safety-verdict" id="safetyVerdict"><span class="spin"></span> Screening on-chain data…</div>
+              <ul class="safety-list" id="safetyList"></ul>
+            </section>
+
+            <section class="market-card">
+              <div class="market-header"><span style="font-weight:700;font-size:15px;">Top holders</span><span class="t-name" id="holdersFoot">top 10 token accounts</span></div>
+              <div class="holders-row" id="holdersRow"><span class="t-name">Loading holders…</span></div>
+            </section>
+          </div>
+
+          <div class="trade-side">
+            <section class="market-card trade-panel">
+              <div class="tp-tabs">
+                <button class="tp-tab active" data-side="buy">Buy</button>
+                <button class="tp-tab" data-side="sell">Sell</button>
+              </div>
+
+              <div class="tp-balance" id="tpBalanceRow"><span>SOL balance</span><strong id="tpSolBal">—</strong></div>
+
+              <label class="wiz-field tp-amount">
+                <em id="tpAmountLabel"><span>Amount</span><small id="tpFiat">≈ $0.00</small></em>
+                <div class="tp-input">
+                  <input id="tpAmount" type="text" inputmode="decimal" value="0.1" autocomplete="off">
+                  <span id="tpUnit">SOL</span>
+                </div>
+              </label>
+              <div class="wiz-chips tp-presets" id="tpPresets">
+                <button type="button" data-sol="0.05">0.05</button>
+                <button type="button" class="active" data-sol="0.1">0.1</button>
+                <button type="button" data-sol="0.5">0.5</button>
+                <button type="button" data-sol="1">1</button>
+              </div>
+
+              <div class="wiz-rows tp-quote" id="tpQuote" hidden>
+                <div class="wiz-row"><span id="tpQLbl1">You pay</span><strong id="tpPay">—</strong></div>
+                <div class="wiz-row"><span id="tpQLbl2">You get ≈</span><strong id="tpGet">—</strong></div>
+                <div class="wiz-row"><span>Price impact</span><strong id="tpImpact">—</strong></div>
+                <div class="wiz-row"><span>Min. received</span><strong id="tpMin">—</strong></div>
+              </div>
+
+              <label class="wiz-field">
+                <em>Slippage</em>
+                <select id="tpSlippage" class="sec-select">
+                  <option value="50" selected>0.5%</option>
+                  <option value="100">1%</option>
+                  <option value="300">3%</option>
+                  <option value="500">5% — memes</option>
+                </select>
+              </label>
+
+              <button class="swap-confirm tp-execute" id="tpExecute" type="button">Connect wallet to trade</button>
+              <p class="wiz-hint center" id="tpHint"></p>
+              <div class="tp-progress" id="tpProgress" hidden>
+                <div class="wp-row" data-sp="quoting"><i></i>Fetching Jupiter quote</div>
+                <div class="wp-row" data-sp="building"><i></i>Building transaction</div>
+                <div class="wp-row" data-sp="signing"><i></i>Approve in your wallet</div>
+                <div class="wp-row" data-sp="sending"><i></i>Sending to Solana</div>
+                <div class="wp-row" data-sp="confirming"><i></i>Confirming</div>
+              </div>
+            </section>
+
+            <section class="market-card">
+              <div class="market-header"><span style="font-weight:700;font-size:15px;">Your position</span><strong class="safety-score" id="posValue">—</strong></div>
+              <div class="wiz-rows">
+                <div class="wiz-row"><span>Holdings</span><strong id="posAmount">—</strong></div>
+                <div class="wiz-row"><span>Value</span><strong id="posUsd">—</strong></div>
+                <div class="wiz-row"><span>Avg. cost</span><strong id="posCost">—</strong></div>
+                <div class="wiz-row"><span>PnL</span><strong id="posPnl">—</strong></div>
+              </div>
+              <button class="table-trade-btn tp-sellall" id="posSellBtn" type="button" hidden>Sell all</button>
+            </section>
+
+            <section class="market-card">
+              <div class="market-header"><span style="font-weight:700;font-size:15px;">Recent trades</span></div>
+              <div class="tp-history" id="tpHistory"><span class="t-name">Your swaps on this token land here.</span></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== VIEW 11: WALLETS / RPC ========== -->
+    <div id="pageWallets" class="dash-view" hidden>
+      <div class="view-header">
+        <div class="vh-with-icon">
+          <span class="vh-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+          </span>
+          <div>
+            <h2>Wallets</h2>
+            <p class="view-sub">Your non-custodial connection — deposit address, live balances and the RPC layer everything runs on.</p>
+          </div>
+        </div>
+        <button class="btn-primary" id="wlConnectBtn">Connect wallet</button>
+      </div>
+
+      <div class="wl-grid">
+        <section class="market-card wl-card">
+          <div class="market-header"><span style="font-weight:700;font-size:15px;">Deposit address</span><span class="token-chain-badge" id="wlNetBadge">DEVNET</span></div>
+          <div class="wl-addr" id="wlAddr">Connect a wallet to see your address</div>
+          <div class="wl-actions">
+            <button class="table-trade-btn" id="wlCopy">Copy address</button>
+            <a class="table-trade-btn" id="wlExplorer" href="#" target="_blank" rel="noopener">Explorer ↗</a>
+          </div>
+          <p class="wl-fine">Non-custodial: the keys stay in Phantom/Solflare. Send only network-supported assets to this address.</p>
+        </section>
+
+        <section class="market-card wl-card">
+          <div class="market-header"><span style="font-weight:700;font-size:15px;">Balance</span><button class="table-trade-btn" id="wlRefresh">Refresh</button></div>
+          <div class="wl-balance"><strong id="wlBal">—</strong><span>SOL</span></div>
+          <div class="wiz-rows">
+            <div class="wiz-row"><span>Wallet</span><strong id="wlStatus">Not connected</strong></div>
+            <div class="wiz-row"><span>Network</span><strong id="wlNetwork">Devnet</strong></div>
+            <div class="wiz-row"><span>USD value</span><strong id="wlUsd">—</strong></div>
+          </div>
+        </section>
+
+        <section class="market-card wl-card">
+          <div class="market-header"><span style="font-weight:700;font-size:15px;">RPC layer</span><span class="rpc-pill" id="wlRpcPill"><i></i><b id="wlRpcMs">—</b></span></div>
+          <label class="wiz-field">
+            <em>Active network</em>
+            <select id="wlNetSelect" class="sec-select">
+              <option value="devnet" selected>Devnet — free</option>
+              <option value="mainnet">Mainnet — real SOL</option>
+            </select>
+          </label>
+          <label class="wiz-field">
+            <em>Custom RPC URL <small>optional — Helius / QuickNode / Triton</small></em>
+            <input id="wlRpcInput" type="url" placeholder="https://mainnet.helius-rpc.com/?api-key=…" autocomplete="off" spellcheck="false">
+          </label>
+          <div class="wl-actions">
+            <button class="btn-primary btn-sm" id="wlRpcSave">Save &amp; test</button>
+            <button class="table-trade-btn" id="wlRpcReset">Use public RPC</button>
+          </div>
+          <p class="wl-fine" id="wlRpcNote">Public RPCs rate-limit under load — a personal RPC keeps quotes and launches snappy.</p>
+        </section>
+      </div>
+
+      <section class="market-card" style="margin-top:20px;">
+        <div class="market-header"><span style="font-weight:700;font-size:15px;">Token holdings</span><span class="t-name" id="wlHoldCount">—</span></div>
+        <table class="market-table">
+          <thead><tr><th>Token</th><th>Balance</th><th>Value</th><th>Action</th></tr></thead>
+          <tbody id="wlHoldBody"><tr><td colspan="4" class="t-name" style="text-align:center;padding:24px;">Connect a wallet to load your real on-chain balances.</td></tr></tbody>
+        </table>
+      </section>
+    </div>
+
+    <!-- ========== SHARED SECTION VIEW (market-style sections) ========== -->
+    <div id="pageSection" class="dash-view" hidden></div>
+
+    <!-- Status strip -->
+    <div class="status-strip">
+      <span class="st live"><i></i>Engine live</span>
+      <span class="st off" id="stWallets"><i></i>Wallets not created</span>
+      <span class="st off" id="stTelegram"><i></i>Telegram ready</span>
+      <span class="st live" id="stSnipe"><i></i>Auto Snipe armed</span>
+      <span class="st live" id="stAi"><i></i>AI trading active</span>
+      <span class="st off" id="stLaunch"><i></i>Wallet not connected</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dash-foot">
+      <span>SMALL LANTERN. BIG CHAIN ENERGY.</span>
+      <span><a href="#" data-action="X">𝕏 @lanternbot</a> · <a href="#" data-action="Community">Telegram community</a></span>
+      <span>LANTERN · SOL + Robinhood</span>
+    </footer>
+
+  </main>
+
+  <!-- ================= BUY / TRADE MODAL ================= -->
+  <div class="modal-overlay" id="buyOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="buyTitle">
+      <div class="modal-head">
+        <h3 id="buyTitle">Buy <span id="modalTokenName">$LANTERN</span></h3>
+        <button class="callout-close" id="buyClose" aria-label="Close">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="modal-sub">Real on-chain swap via Jupiter · you sign in Phantom.</p>
+      <div class="swap-input-wrap">
+        <input id="buyAmount" type="text" inputmode="decimal" placeholder="0.0" autocomplete="off" spellcheck="false">
+        <span class="swap-suffix" id="buySuffix">SOL</span>
+      </div>
+      <div class="quick-row">
+        <button data-quick="0.25">25%</button>
+        <button data-quick="0.5">50%</button>
+        <button data-quick="0.75">75%</button>
+        <button data-quick="1">MAX</button>
+      </div>
+      <div class="modal-stats">
+        <div><span>Estimated Output:</span> <strong id="estTokens">0 tokens</strong></div>
+        <div><span>Slippage:</span> <strong>1%</strong></div>
+        <div><span>Route:</span> <strong>Jupiter Smart Router</strong></div>
+      </div>
+      <button class="swap-confirm" id="buyConfirm">
+        <span id="buyConfirmText">Confirm Order</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      <button class="modal-cancel" id="buyCancel">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ================= MEMECOIN LAUNCH WIZARD ================= -->
+  <div class="modal-overlay" id="launchOverlay" aria-hidden="true">
+    <div class="modal launch-modal" role="dialog" aria-modal="true" aria-labelledby="launchTitle">
+      <div class="modal-head">
+        <h3 id="launchTitle">Create a memecoin <span class="live-tag" id="wizNetTag">SOLANA · DEVNET</span></h3>
+        <button class="callout-close" id="launchClose" aria-label="Close">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="modal-sub">Name it, set your creator fee, and deploy a real SPL mint from your wallet — then make your first buy.</p>
+
+      <ol class="wiz-steps" id="wizSteps">
+        <li class="active"><span>1</span>Identity</li>
+        <li><span>2</span>Fees &amp; tokenomics</li>
+        <li><span>3</span>Launch</li>
+        <li><span>4</span>First buy</li>
+      </ol>
+
+      <!-- ---------- STEP 1: IDENTITY ---------- -->
+      <section class="wiz-panel" data-panel="1">
+        <div class="wiz-grid">
+          <div class="wiz-form">
+            <label class="wiz-field">
+              <em>Token name</em>
+              <input id="wizName" type="text" maxlength="32" placeholder="Lantern Inu" autocomplete="off" spellcheck="false">
+            </label>
+            <label class="wiz-field">
+              <em>Ticker</em>
+              <input id="wizSym" type="text" maxlength="10" placeholder="LINU" autocomplete="off" spellcheck="false">
+            </label>
+            <label class="wiz-field">
+              <em>Story <small id="wizDescCount">0/160</small></em>
+              <textarea id="wizDesc" rows="3" maxlength="160" placeholder="Why will the degens love it? One sharp line."></textarea>
+            </label>
+
+            <span class="wiz-label">Logo <small>upload your own or pick a preset</small></span>
+            <div class="wiz-logo-row">
+              <label class="wiz-upload" for="wizLogoFile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                Upload
+                <input type="file" id="wizLogoFile" accept="image/*" hidden>
+              </label>
+              <div class="wiz-gallery" id="wizGallery"></div>
+            </div>
+
+            <span class="wiz-label">Socials <small>shown on your token card</small></span>
+            <div class="wiz-socials">
+              <label class="wiz-social">
+                <span class="ws-ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>
+                <input id="wizSocialX" type="url" maxlength="80" placeholder="https://x.com/yourtoken" autocomplete="off" spellcheck="false">
+              </label>
+              <label class="wiz-social">
+                <span class="ws-ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span>
+                <input id="wizSocialTg" type="url" maxlength="80" placeholder="https://t.me/yourtoken" autocomplete="off" spellcheck="false">
+              </label>
+              <label class="wiz-social">
+                <span class="ws-ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+                <input id="wizSocialWeb" type="url" maxlength="80" placeholder="https://yourtoken.xyz" autocomplete="off" spellcheck="false">
+              </label>
+            </div>
+          </div>
+
+          <aside class="wiz-preview">
+            <span class="wiz-preview-tag">LIVE PREVIEW</span>
+            <div class="lp-card">
+              <div class="lp-logo" id="lpLogo"><span>?</span></div>
+              <div class="lp-id">
+                <strong id="lpSym">$TOKEN</strong>
+                <span id="lpName">Your memecoin</span>
+              </div>
+              <p id="lpDesc">Your story shows up right here.</p>
+              <div class="lp-meta">
+                <span class="token-chain-badge" id="lpChain">SOLANA</span>
+                <span class="lp-supply" id="lpSupplyTxt">1,000,000,000 supply</span>
+              </div>
+            </div>
+            <div class="wiz-tip">Tip: a readable name plus a real story is what the traction engine scores first.</div>
+          </aside>
+        </div>
+        <div class="wiz-actions">
+          <span class="wiz-hint" id="wizHint1"></span>
+          <div class="wiz-actions-right">
+            <button class="modal-cancel" type="button" data-wiz-cancel>Cancel</button>
+            <button class="swap-confirm wiz-next" type="button" data-wiz-next="2">Continue →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- STEP 2: TOKENOMICS ---------- -->
+      <section class="wiz-panel" data-panel="2" hidden>
+        <div class="wiz-grid">
+          <div class="wiz-form">
+            <span class="wiz-label">Total supply <small>minted to your wallet</small></span>
+            <div class="wiz-chips" id="wizSupplyChips">
+              <button type="button" data-supply="1000000">1M</button>
+              <button type="button" data-supply="100000000">100M</button>
+              <button type="button" class="active" data-supply="1000000000">1B</button>
+              <button type="button" data-supply="10000000000">10B</button>
+            </div>
+            <label class="wiz-field">
+              <em>Custom supply</em>
+              <input id="wizSupply" type="text" inputmode="numeric" value="1000000000" autocomplete="off">
+            </label>
+
+            <label class="wiz-field">
+              <em>Decimals</em>
+              <select id="wizDecimals" class="sec-select">
+                <option value="9" selected>9 — standard (SOL style)</option>
+                <option value="6">6 — USDC style</option>
+                <option value="2">2 — cash style</option>
+                <option value="0">0 — whole numbers only</option>
+              </select>
+            </label>
+
+            <div class="wiz-checks">
+              <label>
+                <input type="checkbox" id="wizRevokeMint" checked>
+                <span><strong>Revoke mint authority</strong> — fixed supply, nobody can ever print more.</span>
+              </label>
+              <label>
+                <input type="checkbox" id="wizRevokeFreeze" checked>
+                <span><strong>Revoke freeze authority</strong> — no wallet can be frozen. Rug-proof signal.</span>
+              </label>
+            </div>
+
+            <span class="wiz-label">Creator fee <small>share of volume back to you &amp; holders</small></span>
+            <div class="wiz-range">
+              <input id="wizFee" type="range" min="0" max="5" step="0.5" value="1">
+              <strong id="wizFeeVal">1%</strong>
+            </div>
+            <div class="wiz-range-note">
+              Split: <b id="wizFeeSplit">50 / 50</b> — you / rained back on holders
+            </div>
+            <div class="wiz-range">
+              <input id="wizRain" type="range" min="0" max="100" step="5" value="50">
+              <strong id="wizRainVal">50%</strong>
+            </div>
+            <div class="wiz-range-note" id="wizRainNote">50% of every creator fee is queued for holder rain draws.</div>
+          </div>
+
+          <aside class="wiz-preview">
+            <span class="wiz-preview-tag">TOKENOMICS</span>
+            <div class="wiz-tok-rows">
+              <div><span>Supply</span><strong id="tokSupply">1,000,000,000</strong></div>
+              <div><span>Decimals</span><strong id="tokDec">9</strong></div>
+              <div><span>Base units</span><strong id="tokUnits">1,000,000,000,000,000,000</strong></div>
+              <div><span>Mint authority</span><strong id="tokMintAuth" class="ok">Revoked</strong></div>
+              <div><span>Freeze authority</span><strong id="tokFreezeAuth" class="ok">Revoked</strong></div>
+              <div><span>Creator fee</span><strong id="tokFee">1%</strong></div>
+              <div><span>Holder rain</span><strong id="tokRain">50% of fees</strong></div>
+              <div><span>Est. network cost</span><strong id="tokCost">≈0.0036 SOL</strong></div>
+            </div>
+            <div class="wiz-tip">Fixed supply plus revoked authorities is exactly what buyers screen for first.</div>
+          </aside>
+        </div>
+        <div class="wiz-actions">
+          <span class="wiz-hint" id="wizHint2"></span>
+          <div class="wiz-actions-right">
+            <button class="modal-cancel" type="button" data-wiz-back="1">← Back</button>
+            <button class="swap-confirm wiz-next" type="button" data-wiz-next="3">Review launch →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- STEP 3: LAUNCH ---------- -->
+      <section class="wiz-panel" data-panel="3" hidden>
+        <div class="wiz-review">
+          <div class="wiz-review-left">
+            <div class="wiz-rows" id="wizReviewRows"></div>
+
+            <span class="wiz-label">Network</span>
+            <div class="wiz-chips" id="wizNetChips">
+              <button type="button" class="active" data-net="devnet">Devnet — free (recommended)</button>
+              <button type="button" data-net="mainnet">Mainnet — real SOL</button>
+            </div>
+
+            <div class="wiz-score">
+              <div class="wiz-score-head"><span>AI traction score</span><strong id="scoreVal">—</strong></div>
+              <div class="score-bar"><i id="scoreBar" style="width:0%"></i></div>
+              <ul id="scoreTips"></ul>
+            </div>
+          </div>
+
+          <div class="wiz-launch">
+            <div class="wiz-wallet" id="wizWalletBox">
+              <div class="wiz-wallet-row"><span>Status</span><strong id="wizWalletState">Not connected</strong></div>
+              <div class="wiz-wallet-row"><span>Address</span><strong class="mono" id="wizWalletAddr">—</strong></div>
+              <div class="wiz-wallet-row"><span>Balance</span><strong id="wizWalletBal">—</strong></div>
+              <div class="wiz-wallet-row"><span>Est. cost</span><strong id="wizCost">≈0.0036 SOL</strong></div>
+            </div>
+
+            <div class="wiz-progress" id="wizProgress" hidden>
+              <div class="wp-row" data-wp="prep"><i></i>Preparing mint account</div>
+              <div class="wp-row" data-wp="sign1"><i></i>Approve in wallet — create mint</div>
+              <div class="wp-row" data-wp="conf1"><i></i>Confirming mint on Solana</div>
+              <div class="wp-row" data-wp="sign2"><i></i>Approve in wallet — mint supply</div>
+              <div class="wp-row" data-wp="conf2"><i></i>Confirming supply + authorities</div>
+            </div>
+
+            <div class="wiz-success" id="wizSuccess" hidden>
+              <div class="ws-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> LIVE ON-CHAIN</div>
+              <div class="wiz-wallet-row"><span>Mint</span><strong class="mono" id="wsMint">—</strong></div>
+              <div class="wiz-wallet-row"><span>Signature</span><strong class="mono" id="wsSig">—</strong></div>
+              <a class="ws-link" id="wsLink" href="#" target="_blank" rel="noopener">View on Solscan ↗</a>
+            </div>
+
+            <button class="swap-confirm" id="wizConnectBtn" type="button" hidden>Connect wallet</button>
+            <button class="swap-confirm" id="wizLaunchBtn" type="button" hidden>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+              Launch memecoin
+            </button>
+            <button class="swap-confirm" id="wizFirstBuyBtn" type="button" hidden>Make your first buy →</button>
+            <button class="modal-cancel" id="wizViewBtn" type="button" hidden>View in Launchpad</button>
+            <button class="modal-cancel" id="wizAgainBtn" type="button" hidden>Create another memecoin</button>
+            <p class="wiz-fine" id="wizFine">You will sign 2 transactions: create the mint, then mint your supply.</p>
+            <p class="wiz-hint center" id="wizHint3"></p>
+          </div>
+        </div>
+        <div class="wiz-actions">
+          <button class="modal-cancel" type="button" data-wiz-back="2">← Back</button>
+        </div>
+      </section>
+
+      <!-- ---------- STEP 4: FIRST BUY ---------- -->
+      <section class="wiz-panel" data-panel="4" hidden>
+        <div class="wiz-review">
+          <div class="wiz-review-left">
+            <div class="fb-token" id="fbToken">
+              <div class="fb-logo" id="fbLogo">?</div>
+              <div class="fb-id">
+                <strong id="fbSym">$TOKEN</strong>
+                <span class="mono" id="fbMint">—</span>
+              </div>
+              <span class="token-chain-badge" id="fbNet">SOLANA</span>
+            </div>
+
+            <div class="wiz-rows" id="fbStats" hidden>
+              <div class="wiz-row"><span>Price</span><strong id="fbPrice">—</strong></div>
+              <div class="wiz-row"><span>Liquidity</span><strong id="fbLiq">—</strong></div>
+              <div class="wiz-row"><span>Market cap</span><strong id="fbMcap">—</strong></div>
+              <div class="wiz-row"><span>24h volume</span><strong id="fbVol">—</strong></div>
+            </div>
+
+            <div class="fb-noliquidity" id="fbNoPool">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+              <div>
+                <strong>No liquidity pool yet</strong>
+                <p>Your mint is live, but fresh tokens only become tradable once a pool exists. Create one on Orca or Raydium with your pre-minted supply — trading (and this first buy) unlocks the moment it's live.</p>
+              </div>
+            </div>
+
+            <div class="wiz-tip" id="fbTip">Your first buy runs through Jupiter — the same routing as every trade in LANTERN.</div>
+          </div>
+
+          <div class="wiz-launch">
+            <div class="wiz-buy" id="fbBuyBox" hidden>
+              <div class="wiz-buy-head">
+                <span>Buy with SOL</span>
+                <button type="button" class="fb-max" id="fbMax">Max</button>
+              </div>
+              <div class="fb-amount">
+                <input id="fbAmount" type="text" inputmode="decimal" value="0.1" autocomplete="off">
+                <span>SOL</span>
+              </div>
+              <div class="wiz-chips fb-presets" id="fbPresets">
+                <button type="button" data-sol="0.05">0.05</button>
+                <button type="button" class="active" data-sol="0.1">0.1</button>
+                <button type="button" data-sol="0.5">0.5</button>
+                <button type="button" data-sol="1">1</button>
+              </div>
+
+              <div class="wiz-rows fb-quote" id="fbQuote" hidden>
+                <div class="wiz-row"><span>You pay</span><strong id="fbPay">—</strong></div>
+                <div class="wiz-row"><span>You get ≈</span><strong id="fbGet">—</strong></div>
+                <div class="wiz-row"><span>Price impact</span><strong id="fbImpact">—</strong></div>
+                <div class="wiz-row"><span>Min. received</span><strong id="fbMin">—</strong></div>
+              </div>
+
+              <label class="wiz-field">
+                <em>Slippage tolerance</em>
+                <select id="fbSlippage" class="sec-select">
+                  <option value="50" selected>0.5%</option>
+                  <option value="100">1%</option>
+                  <option value="300">3%</option>
+                  <option value="500">5% — memes</option>
+                </select>
+              </label>
+
+              <button class="swap-confirm" id="fbBuyBtn" type="button">Buy now</button>
+              <p class="wiz-hint center" id="fbHint"></p>
+            </div>
+
+            <div class="wiz-wallet">
+              <div class="wiz-wallet-row"><span>Wallet</span><strong id="fbWallet">—</strong></div>
+              <div class="wiz-wallet-row"><span>SOL balance</span><strong id="fbBal">—</strong></div>
+              <div class="wiz-wallet-row"><span>Network</span><strong>Solana Mainnet</strong></div>
+            </div>
+            <p class="wiz-fine">Swaps execute on Solana mainnet through Jupiter. You sign every transaction.</p>
+          </div>
+        </div>
+        <div class="wiz-actions">
+          <button class="modal-cancel" type="button" data-wiz-back="3">← Back</button>
+          <div class="wiz-actions-right">
+            <button class="modal-cancel" type="button" id="fbSkip">Skip for now</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="announcement" class="sr-only" aria-live="polite"></div>
+  <script src="marketdata.js"></script>
+  <script src="dashboard.js"></script>
+  <script type="module" src="chain.js"></script>
+</body>
+</html>

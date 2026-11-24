@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06080f">
+  <meta name="description" content="LANTERN — your all-in-one meme utility for AI-powered trading, token sniping, discovery, launches, and rewards.">
+  <title>LANTERN — Light Up the Chain</title>
+  <link rel="icon" href="assets/lantern-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>try{var p=new URLSearchParams(location.search).get('theme');var t=p||localStorage.getItem("lantern:theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ LOADER ============ -->
+  <div id="loader" class="loader" role="status" aria-label="Loading LANTERN">
+    <div class="ld-stage" aria-hidden="true">
+      <span class="ld-medal">
+        <img class="ld-mascot" src="assets/lantern-logo.png" alt="" width="200" height="200" fetchpriority="high">
+      </span>
+      <span class="ld-shadow"></span>
+    </div>
+    <div class="ld-word">LANTERN</div>
+    <div class="ld-label">lighting up the chain<span class="ld-dots"><i></i><i></i><i></i></span></div>
+  </div>
+
+  <!-- ============ HEADER / NAV ============ -->
+  <header id="header">
+    <a class="brand" href="#" aria-label="LANTERN home">
+      <img src="assets/lantern-logo.png" alt="LANTERN logo" class="brand-logo-img">
+      <span class="brand-text">LANTERN</span>
+    </a>
+
+    <div class="header-quote">LIGHT UP THE CHAIN.</div>
+
+    <nav class="head-nav" id="navLinks">
+      <a href="#features" class="head-link">FEATURES</a>
+    </nav>
+
+    <div class="head-actions">
+      <a href="#" class="login-btn" data-login>LOGIN</a>
+      <button class="head-circle" id="themeIcon" aria-label="Toggle light/dark mode" title="Switch theme">
+        <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ============ MOBILE NAV OVERLAY ============ -->
+  <div class="mobile-nav" id="mobileNav">
+    <nav>
+      <a href="#features" class="mobile-nav-link">FEATURES</a>
+      <hr class="mobile-divider">
+      <a href="#" class="mobile-nav-link mobile-login" data-login>LOGIN</a>
+    </nav>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            LANTERN IS LIVE
+          </div>
+          <h1>LIGHT UP<br>YOUR <em>ON-CHAIN</em><br>GAME.</h1>
+          <p class="hero-sub">Meet LANTERN — your all-in-one meme utility for AI-powered trading, token sniping, token discovery, launches, and rewards.</p>
+          <div class="hero-ctas">
+            <a href="#" class="btn-cta btn-cta-hero" data-login>LAUNCH LANTERN<span class="btn-cta-arrow">→</span></a>
+            <a href="#features" class="btn btn-ghost">EXPLORE FEATURES<span class="btn-arrow">↓</span></a>
+          </div>
+          <div class="hero-caption">LIGHT UP THE CHAIN ✦ ON-CHAIN ENERGY ✦ BUILT FOR THE DEGENS</div>
+        </div>
+
+        <div class="hero-visual" id="heroVisual">
+          <div class="hero-orb" id="heroOrb">
+            <div class="mascot-interactive-area" id="mascotArea">
+              <div class="mascot-mover" id="mascotMover">
+                <img src="assets/mascot.png" alt="LANTERN flame mascot pointing forward" class="mascot-img" id="mascotImg" draggable="false">
+              </div>
+            </div>
+          </div>
+          <div class="mascot-shadow" id="mascotShadow"></div>
+          <div class="hero-bubble">we're live!</div>
+          <span class="hero-spark one">✦</span>
+          <span class="hero-spark two">⚡</span>
+          <div class="hero-stamp">
+            100%<br><strong>LANTERN</strong><br>0% CHILL
+          </div>
+          <span class="tap-hint">✦ drag or tap the mascot</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TICKER ===== -->
+    <div class="ticker" aria-label="LANTERN is live — on-chain energy">
+      <div aria-hidden="true">LIGHT UP THE CHAIN ✦ LANTERN IS LIVE ✦ ON-CHAIN ENERGY ✦ THE NEXT WAVE STARTS HERE ✦ BUILT FOR THE DEGENS ✦ LIGHT UP THE CHAIN ✦ LANTERN IS LIVE ✦ ON-CHAIN ENERGY ✦&nbsp;</div>
+    </div>
+
+    <!-- ===== VALUE PROPOSITION ===== -->
+    <section class="value-prop" id="value">
+      <span class="eyebrow">THE LANTERN ECOSYSTEM</span>
+      <h2>ONE ECOSYSTEM.<br>MORE WAYS TO <em>MOVE.</em></h2>
+      <p>LANTERN brings together the tools and experiences that crypto-native users need to discover tokens, explore launches, configure trading strategies, and participate in a growing ecosystem.</p>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="features" id="features">
+      <div class="features-head">
+        <span class="eyebrow">ONE LOGIN. EVERY TOOL.</span>
+        <h2>Log in and let the lantern guide you.</h2>
+        <p>Sign in to access every tool in the LANTERN ecosystem. Your strategies, your limits, your call.</p>
+      </div>
+
+      <div class="cards">
+        <!-- Hero card: AI Auto Trading -->
+        <article class="card hero-card" id="ai-trading">
+          <span class="card-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+            NEW → CORE FEATURE
+          </span>
+          <h3>AI Auto Trading</h3>
+          <p>Explore AI-assisted trading tools and configurable trading strategies. Set your per-trade budget, adjust confidence thresholds, and review every decision with full transparency.</p>
+          <ul>
+            <li>Set per-trade max and daily budget</li>
+            <li>Configure confidence thresholds</li>
+            <li>Review decisions with full transparency</li>
+          </ul>
+          <a href="#" class="btn-cta btn-cta-sm" data-login>START EXPLORING<span class="btn-cta-arrow">→</span></a>
+        </article>
+
+        <!-- Auto Sniping -->
+        <article class="card" id="auto-sniping">
+          <div class="card-icon">
+            <svg class="card-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="6"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </div>
+          <h3>Auto Sniping</h3>
+          <p>Configure entry rules and discover opportunities around supported token launches.</p>
+        </article>
+
+        <!-- Token Lookup -->
+        <article class="card" id="token-lookup">
+          <div class="card-icon">
+            <svg class="card-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/>
+              <path d="m21 21-4.35-4.35"/>
+              <path d="M11 8v6"/>
+              <path d="M8 11h6"/>
+            </svg>
+          </div>
+          <h3>Token Lookup</h3>
+          <p>Explore token information, market data, and available contract insights.</p>
+        </article>
+
+        <!-- Wallets -->
+        <article class="card" id="wallets-section">
+          <div class="card-icon">
+            <svg class="card-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+              <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+              <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+            </svg>
+          </div>
+          <h3>Wallets</h3>
+          <p>Access wallet-related tools and view supported token information.</p>
+        </article>
+
+        <!-- Launchpad -->
+        <article class="card" id="launchpad-section">
+          <div class="card-icon">
+            <svg class="card-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+              <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+              <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+              <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+            </svg>
+          </div>
+          <h3>Launchpad</h3>
+          <p>Create and launch your own memecoin in minutes — a real Solana mint, live preview, traction score, and instant explorer links.</p>
+          <a href="dashboard.html#launchpad" class="btn-cta btn-cta-sm btn-launch">
+            <svg class="btn-launch-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+              <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+              <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+              <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+            </svg>
+            LAUNCH A MEMECOIN
+            <span class="btn-cta-arrow">→</span>
+          </a>
+        </article>
+
+        <!-- Rewards & Referrals -->
+        <article class="card" id="rewards-section">
+          <div class="card-icon">
+            <svg class="card-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="8" width="18" height="4" rx="1"/>
+              <path d="M12 8v13"/>
+              <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/>
+              <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+            </svg>
+          </div>
+          <h3>Rewards &amp; Referrals</h3>
+          <p>Explore community rewards and referral opportunities.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="final-cta">
+      <div class="final-inner">
+        <div class="final-grid">
+          <div class="final-copy">
+            <span class="eyebrow">THE CHAIN AWAITS</span>
+            <h2>READY TO LIGHT UP<br>THE <em>CHAIN?</em></h2>
+            <p>Step into the LANTERN ecosystem.</p>
+            <a href="#" class="btn-cta btn-cta-lg" data-login>LOGIN TO EXPLORE LANTERN<span class="btn-cta-arrow">→</span></a>
+          </div>
+
+          <div class="final-connect">
+            <div class="connect-card">
+              <span class="eyebrow">CONNECT WITH US</span>
+              <p class="connect-desc">Join the community, get updates, and never miss a launch.</p>
+              <div class="connect-actions">
+                <a href="#" class="connect-btn connect-telegram" data-social="telegram">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#2AA5E0"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.05 11.9c1.55-.68 4.13-1.85 5.53-2.45 2.02-.87 2.94-1.3 3.35-1.44.5-.17.9-.1 1.14.12.23.21.3.52.29.85-.02.62-.4 3.4-.6 4.72-.11.72-.35 1.14-.64 1.2-.28.06-.62-.08-1.05-.4-.51-.38-1.63-1.16-1.63-1.16l-.86-.62c-.69-.52-.36-1.13.32-1.62.81-.58 1.44-1.02 1.7-1.23.14-.12.1-.24-.09-.19-.36.11-1.31.75-2.96 1.9-.63.44-1.31.43-1.94.25-.55-.16-1.28-.4-1.56-.5-.44-.15-.4-.34.27-.6Z" fill="#fff"/></svg>
+                  Join the community
+                </a>
+                <a href="#" class="connect-btn connect-x" data-social="twitter">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25h6.453l4.714 6.231L18.244 2.25Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+                  Follow on X
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/lantern-logo.png" alt="LANTERN" class="footer-icon">
+          <span>LANTERN</span>
+        </div>
+        <p class="footer-desc">A meme utility platform lighting up the on-chain experience. AI trading, sniping, discovery, launches, and rewards — all in one place.</p>
+      </div>
+
+      <div class="footer-col footer-connect">
+        <h4>Connect</h4>
+        <div class="footer-social-col">
+          <a href="#" data-social="telegram">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#2AA5E0"/><path fill-rule="evenodd" clip-rule="evenodd" d="M5.05 11.9c1.55-.68 4.13-1.85 5.53-2.45 2.02-.87 2.94-1.3 3.35-1.44.5-.17.9-.1 1.14.12.23.21.3.52.29.85-.02.62-.4 3.4-.6 4.72-.11.72-.35 1.14-.64 1.2-.28.06-.62-.08-1.05-.4-.51-.38-1.63-1.16-1.63-1.16l-.86-.62c-.69-.52-.36-1.13.32-1.62.81-.58 1.44-1.02 1.7-1.23.14-.12.1-.24-.09-.19-.36.11-1.31.75-2.96 1.9-.63.44-1.31.43-1.94.25-.55-.16-1.28-.4-1.56-.5-.44-.15-.4-.34.27-.6Z" fill="#fff"/></svg>
+            Telegram
+          </a>
+          <a href="#" data-social="twitter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25h6.453l4.714 6.231L18.244 2.25Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+            𝕏 / Twitter
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© LANTERN <span id="year"></span></span>
+      <span class="footer-tagline">LIGHT UP THE CHAIN.</span>
+    </div>
+  </footer>
+
+  <!-- Screen reader announcements -->
+  <div id="announcement" class="sr-only" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

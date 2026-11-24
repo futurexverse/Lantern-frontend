@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#06080f">
+  <title>LANTERN · Trade</title>
+  <link rel="icon" href="assets/lantern-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="trade.css">
+</head>
+<body>
+
+  <header class="trade-header">
+    <a href="index.html" class="brand">
+      <img src="assets/lantern-logo.png" alt="LANTERN" class="brand-logo-img">
+      <span class="brand-text">LANTERN</span>
+    </a>
+    <div class="trade-net">
+      <span class="net-dot"></span> Solana Mainnet
+    </div>
+  </header>
+
+  <main class="trade-main">
+
+    <!-- ===== Wallet connect state ===== -->
+    <section id="walletState" class="card">
+      <div class="wallet-row">
+        <div class="wallet-info">
+          <div class="wallet-label">Wallet</div>
+          <div id="walletAddr" class="wallet-addr">Not connected</div>
+        </div>
+        <button id="connectBtn" class="btn-primary">Connect Phantom</button>
+      </div>
+      <div id="solBalance" class="sol-balance" hidden>
+        <span class="bal-label">SOL balance</span>
+        <span id="solAmount" class="bal-val">—</span>
+      </div>
+    </section>
+
+    <!-- ===== Trade form ===== -->
+    <section id="tradeForm" class="card" hidden>
+      <div class="trade-head">
+        <div id="tradeSideBadge" class="side-badge buy">BUY</div>
+        <div class="trade-token">
+          <div id="tokenSym" class="token-sym">—</div>
+          <div id="tokenName" class="token-name">—</div>
+        </div>
+      </div>
+
+      <div class="trade-row">
+        <label>You pay</label>
+        <div class="trade-amount">
+          <span id="payAmount">—</span>
+          <span id="payToken" class="amt-token">SOL</span>
+        </div>
+      </div>
+
+      <div class="trade-row">
+        <label>You receive</label>
+        <div class="trade-amount">
+          <span id="recvAmount">—</span>
+          <span id="recvToken" class="amt-token">—</span>
+        </div>
+      </div>
+
+      <div class="trade-meta">
+        <div class="meta-row"><span>Price</span><span id="metaPrice">—</span></div>
+        <div class="meta-row"><span>Price impact</span><span id="metaImpact">—</span></div>
+        <div class="meta-row"><span>Slippage</span><span id="metaSlip">0.5%</span></div>
+        <div class="meta-row"><span>Liquidity</span><span id="metaLiq">—</span></div>
+      </div>
+
+      <button id="execBtn" class="btn-execute">Execute in Phantom</button>
+      <div id="quoteStatus" class="quote-status"></div>
+    </section>
+
+    <!-- ===== Result ===== -->
+    <section id="tradeResult" class="card result" hidden>
+      <div id="resultIcon" class="result-icon">✅</div>
+      <h2 id="resultTitle">Trade confirmed</h2>
+      <div id="resultBody" class="result-body"></div>
+      <a id="resultLink" class="btn-primary" target="_blank" rel="noopener">View on Solscan ↗</a>
+      <button id="doneBtn" class="btn-ghost">Done</button>
+    </section>
+
+    <!-- ===== Errors ===== -->
+    <section id="errorCard" class="card error" hidden>
+      <div class="result-icon">⚠️</div>
+      <h2>Something went wrong</h2>
+      <div id="errorBody" class="result-body"></div>
+      <button id="retryBtn" class="btn-ghost">Try again</button>
+    </section>
+
+    <!-- ===== No Phantom installed ===== -->
+    <section id="noPhantom" class="card" hidden>
+      <div class="result-icon">🦊</div>
+      <h2>Phantom not detected</h2>
+      <p class="result-body">Install Phantom wallet to trade. Available for browser and mobile.</p>
+      <a href="https://phantom.app/download" class="btn-primary" target="_blank" rel="noopener">Get Phantom ↗</a>
+    </section>
+
+  </main>
+
+  <script type="module" src="trade.js"></script>
+</body>
+</html>

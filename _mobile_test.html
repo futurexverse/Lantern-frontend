@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile Test Harness — 390px</title>
+<style>
+  body { margin: 0; padding: 16px; background: #222; font-family: sans-serif; color: #fff; }
+  h2 { font-size: 14px; margin: 18px 0 6px; }
+  .frame { width: 390px; height: 844px; border: 2px solid #0f0; border-radius: 12px; overflow: hidden; background: #fff; display: block; }
+  .note { font-size: 11px; color: #aaa; margin: 2px 0 10px; }
+</style>
+</head>
+<body>
+  <h2>1 — LANDING (index.html)</h2>
+  <div class="note" id="n1">scroll inside iframe to inspect</div>
+  <iframe class="frame" id="f1" src="index.html"></iframe>
+
+  <h2>2 — DASHBOARD (dashboard.html)</h2>
+  <iframe class="frame" id="f2" src="dashboard.html"></iframe>
+
+  <h2>3 — LOGIN (login.html)</h2>
+  <iframe class="frame" id="f3" src="login.html"></iframe>
+</body>
+</html>
