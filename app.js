@@ -97,8 +97,8 @@
 
   /* ---------- Social links ---------- */
   var SOCIAL = {
-    telegram: 'https://t.me/lantern_bot',
-    twitter: 'https://x.com/lanternbot'
+    telegram: 'https://t.me/LanternRBbot',
+    twitter: 'https://x.com/LANTERNONRH'
   };
   document.querySelectorAll('[data-social]').forEach(function (el) {
     el.addEventListener('click', function (e) {

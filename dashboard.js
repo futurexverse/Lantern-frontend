@@ -730,6 +730,146 @@ function quickTrade(q) {
   openTradeToken(String(q || '').replace(/^\$+/, ''));
 }
 
+/* ---------------- Shared token search dropdown ----------------
+   Turns a text box into a real token lookup: type a token NAME, a
+   ticker or a mint address → see every match with price + 24h change →
+   click one (or press Enter) to open it in the Trade view, where the
+   full card and the buy button live. Used by the topbar search and by
+   the Trade view's own lookup bar. */
+function attachTokenSearch(input, opts) {
+  if (!input) return;
+  opts = opts || {};
+  let dd = null, timer = null, seq = 0, active = -1, rows = [];
+
+  function close() {
+    if (dd) { dd.remove(); dd = null; }
+    rows = []; active = -1;
+    input.removeAttribute('aria-expanded');
+  }
+
+  function place() {
+    if (!dd) return;
+    const r = input.getBoundingClientRect();
+    const w = Math.max(r.width, 300);
+    const left = Math.max(12, Math.min(r.left, window.innerWidth - w - 12));
+    dd.style.top = (r.bottom + 8) + 'px';
+    dd.style.left = left + 'px';
+    dd.style.width = w + 'px';
+  }
+
+  function ensure() {
+    if (!dd) {
+      dd = document.createElement('div');
+      dd.className = 'ts-dd';
+      dd.setAttribute('role', 'listbox');
+      // Keep focus in the box so the row click isn't preceded by a blur.
+      dd.addEventListener('mousedown', e => e.preventDefault());
+      dd.addEventListener('click', e => {
+        const row = e.target.closest('.ts-row');
+        if (!row) return;
+        const i = Number(row.dataset.i);
+        if (rows[i]) pick(rows[i]);
+      });
+      document.body.appendChild(dd);
+      input.setAttribute('aria-expanded', 'true');
+    }
+    place();
+    return dd;
+  }
+
+  function highlight(i) {
+    if (!dd) return;
+    const nodes = dd.querySelectorAll('.ts-row');
+    active = i;
+    nodes.forEach((n, k) => n.classList.toggle('on', k === i));
+    if (i >= 0 && nodes[i]) nodes[i].scrollIntoView({ block: 'nearest' });
+  }
+
+  function pick(t) {
+    close();
+    if (opts.onPick) opts.onPick(t.mint);
+    else quickTrade(t.mint);
+  }
+
+  function paint(list, note) {
+    const el = ensure();
+    if (!list.length) {
+      el.innerHTML = '<div class="ts-empty">' + escHtml(note || 'No Solana token matched that search.') + '</div>';
+      rows = []; active = -1;
+      return;
+    }
+    el.innerHTML = list.map((t, i) => {
+      const chg = t.change ? t.change.h24 : null;
+      const img = t.image
+        ? '<img class="ts-img" src="' + escHtml(t.image) + '" alt="" loading="lazy" onerror="this.remove()">'
+        : '<span class="ts-img ts-ph">' + escHtml(String(t.symbol || '?').slice(0, 1)) + '</span>';
+      return '<div class="ts-row" role="option" data-i="' + i + '">' + img +
+        '<span class="ts-id"><b>$' + escHtml(t.symbol) + '</b><i>' + escHtml(t.name) + '</i></span>' +
+        '<span class="ts-num"><b>' + fmtPrice(t.price) + '</b><i class="' + dirCls(chg) + '">' + fmtPct(chg) + '</i></span>' +
+        '</div>';
+    }).join('');
+    rows = list;
+    active = -1;
+  }
+
+  async function run(q) {
+    const mine = ++seq;
+    const D = window.LANTERN && window.LANTERN.data;
+    if (!D || typeof D.search !== 'function') return;
+    paint([], 'Searching for "' + q + '"…');
+    try {
+      const res = await D.search(q, 8);
+      if (mine !== seq) return;           // a newer keystroke already won
+      if (!res || !res.length) return paint([], 'No Solana token matched "' + q + '".');
+      paint(res);
+    } catch (e) {
+      if (mine !== seq) return;
+      paint([], 'Search failed — check your connection and try again.');
+    }
+  }
+
+  function schedule() {
+    const q = input.value.trim();
+    clearTimeout(timer);
+    if (q.length < 2) { close(); return; }
+    timer = setTimeout(() => run(q), 250);
+  }
+
+  input.addEventListener('input', schedule);
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { close(); return; }
+    const open = dd && rows.length;
+    if (e.key === 'ArrowDown' && open) { e.preventDefault(); highlight(Math.min(active + 1, rows.length - 1)); return; }
+    if (e.key === 'ArrowUp' && open) { e.preventDefault(); highlight(Math.max(active - 1, 0)); return; }
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      clearTimeout(timer);
+      if (open) return pick(rows[active >= 0 ? active : 0]);
+      const q = input.value.trim();
+      if (!q) return;
+      close();
+      if (opts.onPick) opts.onPick(q);
+      else quickTrade(q);
+    }
+  });
+
+  // Clicking away closes the list.
+  document.addEventListener('mousedown', e => {
+    if (!dd) return;
+    if (e.target === input || dd.contains(e.target)) return;
+    close();
+  });
+  // Keep it glued to the box; drop it if the box scrolls off screen.
+  window.addEventListener('scroll', () => {
+    if (!dd) return;
+    const r = input.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) close();
+    else place();
+  }, true);
+  window.addEventListener('resize', () => { if (dd) place(); });
+}
+
 function renderMarketTable() {
   const body = document.getElementById('marketBody');
   if (!body) return;
@@ -807,13 +947,11 @@ document.getElementById('tableFilterInput')?.addEventListener('input', (e) => {
   renderMarketTable();
 });
 
-// Topbar search input
+// Topbar search input = the token lookup. Type a token NAME, a ticker
+// or a mint → pick a result → it opens in the Trade view with the full
+// card and the buy button. (The market table keeps its own filter box.)
 const topSearch = document.getElementById('searchInput');
-topSearch?.addEventListener('input', (e) => {
-  searchQuery = e.target.value.trim();
-  if (VIEWS['Overview'].hidden) showView('Overview');
-  renderMarketTable();
-});
+attachTokenSearch(topSearch);
 
 // Slash key hotkey focuses search
 document.addEventListener('keydown', (e) => {
@@ -3529,7 +3667,9 @@ function initTradeView() {
     tradeState.wired = true;
 
     T$('lookupBtn')?.addEventListener('click', () => openTradeToken(T$('lookupInput') && T$('lookupInput').value));
-    T$('lookupInput')?.addEventListener('keydown', e => { if (e.key === 'Enter') openTradeToken(e.target.value); });
+    // The lookup bar shares the token search dropdown: type a NAME, a
+    // ticker or a mint, then Enter (or a row click) loads that token.
+    attachTokenSearch(T$('lookupInput'), { onPick: q => openTradeToken(q) });
     T$('trendRefresh')?.addEventListener('click', loadTrending);
     T$('tkCopy')?.addEventListener('click', async () => {
       if (!tradeState.mint) return;

@@ -1932,6 +1932,52 @@ body.dash-page {
 .lookup-bar input::placeholder { font-family: var(--font-body); color: var(--ink-faint); font-weight: 500; }
 .lookup-hint { font-size: 12.5px; color: var(--ink-faint); margin: 9px 4px 0; }
 
+/* ---------- Shared token search dropdown (topbar + lookup bar) ---------- */
+.ts-dd {
+  position: fixed;
+  z-index: 60;                       /* above topbar (14), below modals (100) */
+  max-height: min(62vh, 430px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+  padding: 6px;
+  animation: tsIn 0.12s ease-out;
+}
+@keyframes tsIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ts-dd { animation: none; } }
+
+.ts-row {
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 10px; border-radius: 10px; cursor: pointer;
+}
+.ts-row:hover, .ts-row.on { background: var(--bg-elevated); }
+.ts-row.on { box-shadow: inset 0 0 0 1px var(--border-hover); }
+
+.ts-img {
+  width: 34px; height: 34px; flex-shrink: 0;
+  border-radius: 50%; object-fit: cover;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+}
+.ts-img.ts-ph {
+  display: grid; place-items: center;
+  font: 800 14px var(--font-body); color: var(--ink-muted);
+}
+
+.ts-id { display: flex; flex-direction: column; min-width: 0; flex: 1; line-height: 1.25; }
+.ts-id b { font: 800 13.5px var(--font-body); color: var(--ink); }
+.ts-id i { font-style: normal; font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.ts-num { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; line-height: 1.25; }
+.ts-num b { font: 600 12.5px 'JetBrains Mono', monospace; color: var(--ink); }
+.ts-num i { font-style: normal; font: 700 11.5px 'JetBrains Mono', monospace; color: var(--ink-faint); }
+.ts-num i.up { color: #10b981; }
+.ts-num i.down { color: #ef4444; }
+
+.ts-empty { padding: 16px 12px; text-align: center; font: 500 13px var(--font-body); color: var(--ink-faint); }
+
 /* ---------- Trending grid ---------- */
 .trend-head {
   display: flex; justify-content: space-between; align-items: center;
